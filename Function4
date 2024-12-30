@@ -1,0 +1,19 @@
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class SearchManager {
+    public List<DiaryEntry> searchEntries(List<DiaryEntry> entries, String... keywords) {
+        if (keywords == null || keywords.length == 0) {
+            return new ArrayList<>();
+        }
+
+        return entries.stream()
+                .filter(entry -> {
+                    String entryText = entry.getTitle().toLowerCase() + " " + entry.getContent().toLowerCase();
+                    return Arrays.stream(keywords)
+                            .anyMatch(keyword -> entryText.contains(keyword.toLowerCase()));
+                })
+                .collect(Collectors.toList());
+    }
+}
